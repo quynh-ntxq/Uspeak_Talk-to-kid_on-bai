@@ -6,15 +6,34 @@
   <title>ÔN BÀI TALK TO KID</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
-    body { font-family: sans-serif; text-align: center; padding: 2rem; }
-    #question { font-size: 1.8rem; margin: 2rem 0; color: #333; }
-    #answer { font-size: 1.5rem; margin: 1rem 0; color: #007b00; display: none; }
-    button { padding: 0.8rem 2rem; font-size: 1rem; cursor: pointer; margin: 0.5rem; }
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 2rem;
+      font-size: 300%;
+    }
+    #question {
+      font-size: 500%;
+      margin: 2rem 0;
+      color: #333;
+    }
+    #answer {
+      font-size: 300%;
+      margin: 1rem 0;
+      color: #007b00;
+      display: none;
+    }
+    button {
+      padding: 2rem 4rem;
+      font-size: 300%;
+      cursor: pointer;
+      margin: 1rem;
+    }
   </style>
 </head>
 <body>
   <h1>ÔN BÀI TALK TO KID</h1>
-  <p>Dữ liệu sẽ được tự động tải từ file <code>data.xlsx</code> trong cùng thư mục GitHub.</p>
+  <p>Dữ liệu sẽ được update mới sau từng buổi học.</p>
 
   <div id="question">[Câu sẽ hiện ở đây]</div>
   <div id="answer">[Câu trả lời]</div>
@@ -58,8 +77,18 @@
 
     function showAnswer() {
       if (currentIndex === -1) return;
-      document.getElementById("answer").innerText = data[currentIndex].en;
+      const answerText = data[currentIndex].en;
+      document.getElementById("answer").innerText = answerText;
       document.getElementById("answer").style.display = "block";
+
+      const utterance = new SpeechSynthesisUtterance(answerText);
+      utterance.lang = 'en-US';
+      const voices = speechSynthesis.getVoices();
+      const americanVoice = voices.find(v => v.lang === 'en-US' && v.name.includes('Google') || v.name.includes('Microsoft'));
+      if (americanVoice) {
+        utterance.voice = americanVoice;
+      }
+      speechSynthesis.speak(utterance);
     }
   </script>
 </body>
