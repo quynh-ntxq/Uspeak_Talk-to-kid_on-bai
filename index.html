@@ -11,8 +11,8 @@
       font-family: sans-serif;
       text-align: center;
       padding: 1rem;
-      font-size: 110%; /* PC: giảm nhẹ */
-      line-height: 1.7;  /* PC: cách dòng rộng hơn */
+      font-size: 110%;
+      line-height: 1.7;
     }
     h1 {
       font-size: 160%;
@@ -36,18 +36,22 @@
       max-width: 90%;
       line-height: 1.4;
     }
-    button {
-      padding: 0.6rem 1.2rem;
-      font-size: 140%;
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .button-group button {
+      padding: 0.5rem 1rem;
+      font-size: 126%; /* giảm 10% từ 140% */
       cursor: pointer;
-      margin: 0.5rem;
       border: none;
       border-radius: 1rem;
       background: #f2f2f2;
       color: #0066cc;
     }
 
-    /* Mobile: giữ giao diện bạn thích */
     @media (max-width: 768px) {
       body {
         font-size: 102%;
@@ -65,9 +69,13 @@
       #answer {
         font-size: 144%;
       }
-      button {
-        font-size: 132%;
-        padding: 0.6rem 1rem;
+      .button-group {
+        flex-wrap: nowrap;
+        gap: 0.8rem;
+      }
+      .button-group button {
+        font-size: 118%; /* giảm từ 132% */
+        padding: 0.5rem 0.9rem;
       }
     }
   </style>
@@ -79,8 +87,10 @@
   <div id="question">[Câu sẽ hiện ở đây]</div>
   <div id="answer">[Câu trả lời]</div>
 
-  <button onclick="showAnswer()">👁️ Xem kết quả</button>
-  <button onclick="pickRandom()">🎲 Câu tiếp theo</button>
+  <div class="button-group">
+    <button onclick="showAnswer()">👁️ Xem kết quả</button>
+    <button onclick="pickRandom()">🎲 Câu tiếp theo</button>
+  </div>
 
   <script>
     let data = [];
