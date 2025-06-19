@@ -5,29 +5,31 @@
   <meta charset="UTF-8">
   <title>ÔN BÀI TALK TO KID</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: sans-serif;
       text-align: center;
-      padding: 2rem;
-      font-size: 300%;
+      padding: 3rem;
+      font-size: 900%;
     }
     #question {
-      font-size: 500%;
-      margin: 2rem 0;
-      color: #333;
+      font-size: 2000%;
+      font-weight: bold;
+      margin: 3rem 0;
+      color: #000;
     }
     #answer {
-      font-size: 300%;
-      margin: 1rem 0;
+      font-size: 900%;
+      margin: 2rem 0;
       color: #007b00;
       display: none;
     }
     button {
-      padding: 2rem 4rem;
-      font-size: 300%;
+      padding: 3rem 6rem;
+      font-size: 900%;
       cursor: pointer;
-      margin: 1rem;
+      margin: 1.5rem;
     }
   </style>
 </head>
@@ -84,7 +86,7 @@
       const utterance = new SpeechSynthesisUtterance(answerText);
       utterance.lang = 'en-US';
       const voices = speechSynthesis.getVoices();
-      const americanVoice = voices.find(v => v.lang === 'en-US' && v.name.includes('Google') || v.name.includes('Microsoft'));
+      const americanVoice = voices.find(v => v.lang === 'en-US' && (v.name.includes('Google') || v.name.includes('Microsoft')));
       if (americanVoice) {
         utterance.voice = americanVoice;
       }
