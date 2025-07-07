@@ -79,6 +79,10 @@
     .topic-option input[type="checkbox"] {
       cursor: pointer;
     }
+    #progress {
+      font-weight: bold;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -91,13 +95,14 @@
     <div id="topicOptions" class="topic-options">Đang tải dữ liệu...</div>
     <div class="question" id="question">Chưa có dữ liệu.</div>
     <div class="answer" id="answer"></div>
+    <div id="progress">0/0 câu</div>
 
     <button class="btn btn-primary" id="showAnswerBtn" disabled><i class="fa fa-eye"></i> Xem kết quả</button>
     <button class="btn btn-secondary" id="nextBtn" disabled><i class="fa fa-dice"></i> Câu tiếp theo</button>
   </div>
 
   <script>
-    let allData = [], filteredData = [], currentIndex = -1;
+    let allData = [], filteredData = [], usedIndexes = [], currentIndex = -1;
 
     const possibleFiles = [
       'Uspeak_TTK.xlsx',
@@ -168,6 +173,9 @@
         filteredData = allData.filter(item => selectedTopics.includes(item.topic));
       }
 
+      usedIndexes = [];
+      document.getElementById("progress").innerText = `0/${filteredData.length} câu`;
+
       document.getElementById("nextBtn").disabled = filteredData.length === 0;
       document.getElementById("showAnswerBtn").disabled = true;
 
@@ -181,12 +189,19 @@
 
     function nextQuestion() {
       if (filteredData.length === 0) return;
-      currentIndex = Math.floor(Math.random() * filteredData.length);
+      if (usedIndexes.length === filteredData.length) usedIndexes = [];
+
+      const availableIndexes = filteredData.map((_, idx) => idx).filter(idx => !usedIndexes.includes(idx));
+      currentIndex = availableIndexes[Math.floor(Math.random() * availableIndexes.length)];
+      usedIndexes.push(currentIndex);
+
       const q = filteredData[currentIndex];
       document.getElementById("question").innerText = q.vi;
       document.getElementById("answer").innerText = q.en;
       document.getElementById("answer").classList.remove("show");
       document.getElementById("showAnswerBtn").disabled = false;
+
+      document.getElementById("progress").innerText = `${usedIndexes.length}/${filteredData.length} câu`;
     }
 
     function showAnswer() {
